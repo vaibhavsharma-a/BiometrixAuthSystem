@@ -1,0 +1,70 @@
+<!-- fragment_first.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FirstFragment">
+
+    <!-- Button to add a new user profile -->
+    <Button
+        android:id="@+id/buttonAddProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add User Profile" />
+
+    <!-- Input Fields for adding a new profile (Initially hidden) -->
+    <LinearLayout
+        android:id="@+id/inputFieldsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Name EditText -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="text" />
+
+        <!-- Email EditText -->
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress" />
+
+        <!-- UserID EditText -->
+        <EditText
+            android:id="@+id/editTextUserId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter User ID"
+            android:inputType="text" />
+
+        <!-- Button to save the profile -->
+        <Button
+            android:id="@+id/buttonSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+
+        <!-- Button to upload photo -->
+        <Button
+            android:id="@+id/buttonUploadPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Photo" />
+
+    </LinearLayout>
+
+    <!-- RecyclerView to display existing user profiles -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewProfiles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+                body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background:  linear-gradient(90deg,#0f0c29 0%, #302b63 25%, #24243e 100%);
+;
+            overflow: hidden;
+        }
+        .container {
+            background-color: linear-gradient(to right, #36D1DC, #5B86E5);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 400px; /* Adjust container width */
+            margin-top: 1px;
+            border: none; /* Adjust container width */
+            opacity: 0; /* Start with opacity 0 */
+            animation: fadeIn 3s forwards; /* Fade in animation */
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        h3 {
+            color: whitesmoke;
+            margin-top: 0;
+            animation: slideIn 2s ease-out; /* Apply slideIn animation to login heading */
+        }
+        h3:not(:first-of-type) {
+            animation: none; /* Disable animation for other headings */
+        }
+        .form-input {
+            margin-bottom: 30px;
+            padding: 10px;
+            width: calc(100% - 22px); /* Adjust input width */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 10;
+            }
+        }
+        
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .form-input:hover {
+    border-color: #007bff;
+}
+
+/* Focus effect */
+.form-input:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 15px 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Transition */
+.form-input {
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Placeholder styling */
+.form-input::placeholder {
+    color: #000000;
+}
+
+/* Validation styles */
+.invalid-input {
+    border-color: #dc3545;
+}
+
+.valid-input {
+    border-color: #28a745;
+}
+
+/* Label animation */
+.form-input:focus + label,
+.form-input:not(:placeholder-shown) + label {
+    transform: translateY(-20px);
+    font-size: 12px;
+    color: #007bff;
+}
+        #video {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        #capture-button,#login-button{
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+        #capture-button:hover,#login-button:hover{
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #020202;
+        }
+        /* #login-button {
+            background-color: #28a745;
+            border-color: #28a745;
+            margin-left: 10px; Adjust margin between buttons 
+        }*/
+        #login-button:hover {
+            background-color: #25c648;
+            cursor: pointer;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+        #capture-button:hover {
+            background-color: #007bff;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+        #popup-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            text-align: center;
+            z-index: 9999;
+        }
+        #popup-box .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        /* #webcam-container {
+    margin-bottom: -40px; /* Adjust margin to move the container up 
+}*/
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Login</h3>
+        
+        <form id="notificationForm">
+            <button type="button" id="sendNotificationButton">Send Notification</button>
+        </form>
+        <div id="webcam-container">
+            <video id="video" width="280" height="200" autoplay></video> <!-- Adjust video size -->
+            <button id="capture-button">Capture Image</button>
+            <canvas id="canvas" width="280" height="200"></canvas> <!-- Adjust canvas size -->
+        </div>
+        
+        <form id="login-form" method="post" enctype="multipart/form-data">
+            <h5 style="color: white; margin: 0; margin-bottom: 6px;">OR</h5>
+            <input class="form-input" type="text" name="username" id="username" placeholder="Username"><br>
+            <input class="form-input" type="password" name="password" placeholder="Password"><br>
+            <input class="form-input" type="file" accept="image/*" capture="environment" id="image-input" style="display: none;" title="Upload Image" placeholder="Choose an image">
+            <input type="hidden" name="image" id="image">
+            <button id="login-button" type="submit">Login</button>
+        </form>
+
+        
+    </div>
+
+    <div class="box">
+        <a href="#popup-box"></a>
+    </div>
+    <div class="box">
+        
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const captureButton = document.getElementById('capture-button');
+        const canvas = document.getElementById('canvas');
+        const loginForm = document.getElementById('login-form');
+        const statusMessage = document.getElementById('status-message');
+
+        // Access the webcam and stream video
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error('Error accessing webcam:', err);
+            });
+
+        // Capture an image from the video stream
+        captureButton.addEventListener('click', () => {
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageDataURL = canvas.toDataURL('image/jpeg');
+            document.getElementById('image').value = imageDataURL;
+        });
+
+        // Submit the form
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            // You can add additional validation here
+            login();
+        });
+
+        // Function to submit login form
+        function login() {
+            fetch('/login', {
+                method: 'POST',
+                body: new FormData(loginForm)
+            })
+            .then(response => {
+                
+                if (response.headers.get('content-type') && response.headers.get('content-type').includes('application/json')) {
+                    // Response is in JSON format
+                    return response.json();
+                } else {
+                    // No JSON response, likely a successful match
+                    return { success: true };
+                }
+            })
+            .then(data => {
+                console.log(data);
+                // Handle login response
+                if(data.success){
+                    window.location.href = "dashboard";
+                }
+                else
+                    alert("Login failed");
+                // // Show the modal
+                // document.getElementById('popup-box').style.display = 'block';
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Close popup box
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            document.getElementById('popup-box').style.display = 'none';
+        });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const notificationForm = document.getElementById('notificationForm');
+        const sendNotificationButton = document.getElementById('sendNotificationButton');
+        const usernameInput = document.getElementById('username');
+
+        sendNotificationButton.addEventListener('click', function () {
+            const username = usernameInput.value.trim(); // Trim any leading or trailing spaces
+
+            if (!username) {
+                alert('Please enter a username.');
+                return;
+            }
+
+            fetch('/send_notification', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                alert(data); // Display response message
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending notification. Please try again later.');
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>

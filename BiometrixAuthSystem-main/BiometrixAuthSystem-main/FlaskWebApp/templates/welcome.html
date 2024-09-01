@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OASIS - Biometric Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(90deg,#0f0c29 0%, #302b63 25%, #24243e 100%);
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            color: white;
+            animation: fadeIn 3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            position: relative;
+            cursor: default;
+            overflow: hidden;
+        }
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.6);
+            animation: underline 2s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+        }
+        @keyframes underline {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 100%;
+            }
+            100% {
+                width: 0%;
+            }
+        }
+        .oasis-acronym {
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+        }
+        .button {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: rgb(0, 0, 0);
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 0 20px;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: background-color 1s, color 1s;
+            overflow: hidden;
+            position: relative;
+        }
+        .button span {
+            position: relative;
+            z-index: 1;
+        }
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+        .button:hover::before {
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+        }
+        .button-login {
+            background-color: #2ed573; /* Changed color to green */
+            border-color: #2ed573; /* Changed border color to green */
+        }
+        .button-register {
+            background-color: #FF6B6B; /* Changed color to red */
+            border-color: #FF6B6B; /* Changed border color to red */
+        }
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        .button-login:hover::before {
+            background-color: rgba(46, 213, 115, 0.3); /* Changed hover color to match button color */
+        }
+        .button-register:hover::before {
+            background-color: rgba(255, 107, 107, 0.3); /* Changed hover color to match button color */
+        }
+        .button span {
+            display: block;
+            font-size: 14px;
+            margin-top: 5px;
+            position: relative;
+            z-index: 1;
+        }
+    .login-container {
+        position: relative; /* Set the position of the container to relative */
+        display: inline-block; /* Ensure the container only takes up as much width as necessary */
+    }
+
+    .login-img {
+        width: 200px;
+        height: 200px;
+        /* border-radius: 70%;  */
+        margin-bottom: 20px;
+        position: absolute; /* Position the login image absolutely */
+        left: -250px; /* Adjust the left position relative to the container */
+        top: 0; /* Adjust the top position relative to the container */
+    }
+
+    .button-login {
+        margin-left: 20px; /* Adjust the margin to create space for the login image */
+    }
+    .reg-container {
+        position: relative; /* Set the position of the container to relative */
+        display: inline-block; /* Ensure the container only takes up as much width as necessary */
+    }
+
+    .reg-img {
+        width: 200px;
+        height: 200px;
+        /* border-radius: 70%;  */
+        margin-bottom: 20px;
+        position: absolute; /* Position the login image absolutely */
+        right: -250px; /* Adjust the left position relative to the container */
+        top: 0; /* Adjust the top position relative to the container */
+    }
+
+    .button-register {
+        margin-left: 20px; /* Adjust the margin to create space for the login image */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to <span style="font-weight: bold;">OASIS</span></h1>
+        <p class="oasis-acronym">OmniAuth Synchronized Integrated Security</p>
+        <div id="animation" style="margin-bottom: 30px;">
+            <!-- Add your animation related to face recognition here -->
+        </div>
+        <div class="buttons-container">
+            <div class="login-container">
+                <img src="{{ url_for('static', filename='login.svg') }}" alt="login image" class="login-img">
+                <a href="{{ url_for('login') }}" class="button button-login">Login<span>Access your account</span></a>
+            </div>
+            <div class="reg-container">
+                <a href="{{ url_for('register') }}" class="button button-register">Register<span>Create a new account</span></a>
+                <img src="{{ url_for('static', filename='register.svg') }}" alt="register imgage" class="reg-img">
+
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

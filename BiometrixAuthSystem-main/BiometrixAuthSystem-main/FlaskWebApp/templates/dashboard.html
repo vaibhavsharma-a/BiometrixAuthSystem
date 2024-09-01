@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(90deg,#0f0c29 0%, #302b63 25%, #24243e 100%);
+      display: flex;
+      transition: margin-left 0.3s;
+    }
+    .sidebar {
+      position: fixed;
+      width: 200px;
+      height: 100vh;
+      background: linear-gradient(90deg,#0f0c29 0%, #302b63 25%, #24243e 100%);
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      position: fixed;
+      left: -250px; /* Start off the screen */
+      transition: left 0.5s ease; /* Add transition for smooth movement */
+    }
+    .sidebar.active {
+      left: 0; /* Slide the sidebar into view */
+    }
+    .sidebar-header {
+      border-bottom: 1px solid #555;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .sidebar-content {
+      flex-grow: 1;
+    }
+    .sidebar ul {
+      list-style-type: none;
+      padding: 10px;
+    }
+    .sidebar li {
+      margin-bottom: 15px;
+    }
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      padding-right: 10px;
+    }
+    .sidebar a i {
+      margin-right: 10px;
+    }
+    .sidebar a:hover {
+      color: #f30404;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: top;
+      transition: width 0.3s;
+    }
+    h1, h2 {
+      color: #5cb85c;
+    }
+
+    h3 {
+      color: #fff;
+    }
+    ul {
+      list-style-type: none;
+      padding-bottom: 5px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .container {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin: 0 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+      overflow: hidden;
+      position: relative;
+        }
+
+    .container:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+    }
+    .container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(135, 94, 94, 0.3);
+  border-radius: 50%;
+  transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+}
+
+.container:hover::before {
+  width: 30;
+  height: 0;
+  top: 50%;
+  left: 50%;
+}
+
+    .red {
+      background-color: #d9534f;
+      width: 100px; /* Adjust the width */
+    height: 150px; 
+    }
+
+    .blue {
+      background-color: #8f5bc4;
+      width: 100px; /* Adjust the width */
+    height: 150px;
+    }
+
+    .yellow {
+      background-color: #f0ad4e;
+      width: 100px; /* Adjust the width */
+    height: 150px;
+    }
+
+    .green {
+      background-color: #5cb85c;
+      width: 100px; /* Adjust the width */
+    height: 150px;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin: 20px;
+      padding: 10px 0;
+      background: linear-gradient(to right,#431F54,#151226, #17254A);
+      text-align: right;
+      border-radius: 20px;
+      color: #f0f0f0;
+    }
+    .toggle-sidebar {
+      position: fixed;
+      left: 10px;
+      top: 10px;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .toggle-button {
+      position: fixed;
+      top: 30px;
+      left: 10px;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      z-index: 999;
+      background: linear-gradient(to right, #36D1DC, #5B86E5);
+      color: #ffffff;
+      border-radius: 100%;
+      transition: left 0.5s ease;
+    }
+    .toggle-button.active {
+      top: 10px;
+      left: calc(190px + 10px); /* Adjust to the sidebar width and padding */
+    }
+    .profile-img{
+      width: 90px;
+      height: 90px;
+      border-radius: 50%; 
+      margin-bottom: 20px;
+      margin-left: 20px;
+      background: #000;
+    }
+    .stat-svg {
+            width: 150px; /* Adjust the width of the SVG image */
+            height: 150px; /* Maintain aspect ratio */
+            position: absolute;
+            top: 50%; /* Adjust vertical position */
+            left: 10px; /* Adjust horizontal position */
+            transform: translateY(-50%); /* Center vertically */
+    }
+
+    
+
+  </style>
+</head>
+<body>
+  <button id ="toggle-button" class="toggle-button" onclick="toggleSidebar()">&#9776;</button>
+  
+  <div class="sidebar" id="sidebar">
+    <h1>Dashboard</h1>
+    <img src="\svg\profile.svg" alt="Profile Picture", class="profile-img">
+    <ul>
+      <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+      <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+      
+      <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <ul>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+        <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="main-content">
+    <header>
+      <h2>Welcome to Your Dashboard</h2>
+    </header>
+    <div class="message">
+      <h3>You have successfully logged in!</h3>
+    </div>
+    <div class="container-wrapper">
+      <div class="container red">
+        <img src="{{ url_for('static', filename='dash1.svg') }}" alt="stat" class="stat-svg">
+      </div>
+      <div class="container blue">
+        <img src="{{ url_for('static', filename='dashsevr.svg') }}" alt="services" class="stat-svg">
+      </div>
+      <div class="container yellow">
+        <img src="{{ url_for('static', filename='datadash.svg') }}" alt="data" class="stat-svg">
+      </div>
+      <div class="container green">
+        <img src="{{ url_for('static', filename='dashprog.svg') }}" alt="progress" class="stat-svg">
+      </div>
+    </div>
+    <footer>
+      <p>&copy; 2024 OASIS AUTH</p>
+    </footer>
+  </div>
+  <script>
+    // function toggleSidebar() {
+    //   const sidebar = document.getElementById('sidebar');
+    //   sidebar.classList.toggle('active');
+    // }
+    let sidebarOpen = false;
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const toggleButton = document.getElementById('toggle-button');
+
+      sidebarOpen = !sidebarOpen;
+      sidebar.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+      toggleButton.innerHTML = sidebarOpen ? '&#10005;' : '&#9776;';
+    }
+
+    
+  </script>
+</body>
+</html>
